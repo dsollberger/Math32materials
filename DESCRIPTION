@@ -1,0 +1,8 @@
+Package: Math32materials
+Version: 0.1
+Date: 2021-10-06
+Title: Math 32 materials
+Description: homework apps for Math 32 at UC Merced
+Author: Derek Sollberger <dsollberger@ucmerced.edu>
+Maintainer: Derek Sollberger <dsollberger@ucmerced.edu>
+License: GPL-3

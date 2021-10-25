@@ -1,0 +1,170 @@
+---
+title: "LHW4"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library("gradethis")
+library("learnr")
+library("learnrhash")
+# library("packrat")
+library("tidyverse")
+library("visualize")
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Math 32 LearnR Tutorial 4
+
+The **mean corpusular volume** or **mean cell volume** (MCV) is the average volume of a red blood cell.  The following information was gathered, adapted, heavily rounded from the [Wikipedia page](https://en.wikipedia.org/wiki/Mean_corpuscular_volume#cite_note-2), and should not constitute medical advice.  For these mathematical examples, assume that the mean MCV is $\mu = 90$ fL/cell with a standard deviation of $\sigma = 5$ fL/cell and that we can apply the normal distribution based on numerous blood tests.
+
+## R Calculations
+
+On this page, use the `pnorm` command (i.e. `pnorm(stat, mean, sd)`) to answer the tasks.  Students may elect to do the "visualizations" first if that makes more sense to them.
+
+a.  **Microcytic anemia** describes low levels of MCV and could be caused by diseases such as thalassemia.  If microcytic anemia is diagnosed at MCV levels *below* 80 fL/cell, find the probability that a randomly selected blood test will suggest microcytic anemia.
+
+```{r q1, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q1-check}
+grade_this({
+  if (abs(.result - pnorm(80, 90, 5) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+b.  [MedScape](https://emedicine.medscape.com/article/2085770-overview) says that the *reference range* for MCV is from 80 to 96 fL/cell.  Find the probability that a randomly selected blood test will fall within the reference range.  This is also known as **normocytic** size for MCV.
+
+```{r q2, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q2-check}
+grade_this({
+  if (abs(.result - diff(pnorm(c(80,96), 90, 5)) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+c.  **Macrocytic** or **pernicious anemia** describes high levels of MCV, and that may be caused by a nutrient deficiency (for instance, deficiency of vitamin B12).  Find the probability that a randomly selected blood test will report an MCV value *above* 96 fL/cell.
+
+```{r q3, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q3-check}
+grade_this({
+  if (abs(.result - pnorm(96, 90, 5, lower.tail = FALSE) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+d.  Suppose that a pharmaceutical company wants to test a new drug, but only wants patients in the top 4 percent for their clinical trials.  What is the threshold for doctors to recommend patients for this drug trial?
+
+```{r q4, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q4-check}
+grade_this({
+  if (abs(.result - qnorm(0.96, 90, 5) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+## Visualizations
+
+On this page, adapt the `visualize.norm` command to fit the application.  More information about the `visualize` package can be found [here](https://cran.r-project.org/web/packages/visualize/visualize.pdf)
+
+a.  **Microcytic anemia** describes low levels of MCV and could be caused by diseases such as thalassemia.  If microcytic anemia is diagnosed at MCV levels *below* 80 fL/cell, find the probability that a randomly selected blood test will suggest microcytic anemia.
+
+```{r q5, exercise = TRUE, exercise.lines = 2}
+visualize.norm(stat = 0, mu = 0, sd = 1, section = "lower")
+```
+
+```{r q5-solution}
+visualize.norm(stat = 80, mu = 90, sd = 5, section = "lower")
+```
+
+```{r q5-check}
+grade_this_code()
+```
+
+b.  [MedScape](https://emedicine.medscape.com/article/2085770-overview) says that the *reference range* for MCV is from 80 to 96 fL/cell.  Find the probability that a randomly selected blood test will fall within the reference range.  This is also known as **normocytic** size for MCV.
+
+```{r q6, exercise = TRUE, exercise.lines = 2}
+visualize.norm(stat = c(-1, 1), mu = 0, sd = 1, section = "bounded")
+```
+
+```{r q6-solution}
+visualize.norm(stat = c(80, 96), mu = 90, sd = 5, section = "bounded")
+```
+
+```{r q6-check}
+grade_this_code()
+```
+
+c.  **Macrocytic** or **pernicious anemia** describes high levels of MCV, and that may be caused by a nutrient deficiency (for instance, deficiency of vitamin B12).  Find the probability that a randomly selected blood test will report an MCV value *above* 96 fL/cell.
+
+```{r q7, exercise = TRUE, exercise.lines = 2}
+visualize.norm(stat = 0, mu = 0, sd = 1, section = "upper")
+```
+
+```{r q7-solution}
+visualize.norm(stat = 96, mu = 90, sd = 5, section = "upper")
+```
+
+```{r q7-check}
+grade_this_code()
+```
+
+## Concept Checks
+
+```{r q8}
+question("The normal distribution has the memoryless property",
+  answer("TRUE"),
+  answer("FALSE", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+```{r q9}
+question("The normal distribution is symmetric",
+  answer("TRUE", correct = TRUE),
+  answer("FALSE"),
+  allow_retry = TRUE
+)
+```
+
+
+## Wrap Up
+
+Type your name and UC Merced e-mail address inside the quotation marks
+
+```{r student-info, exercise = TRUE}
+student_name  <- ""
+student_email <- ""
+```
+
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(
+  ui_before = default_ui(url = "https://catcourses.ucmerced.edu")
+)
+```
+
+
